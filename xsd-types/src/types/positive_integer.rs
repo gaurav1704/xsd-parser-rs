@@ -42,7 +42,7 @@ impl fmt::Display for PositiveInteger {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{YaDeserialize, YaSerialize};
+    use yaserde_derive::{Deserialize, Serialize};
 
     #[test]
     fn positive_integer_parse_test() {
@@ -83,13 +83,13 @@ mod tests {
         );
     }
 
-    #[derive(Default, PartialEq, Debug, YaSerialize, YaDeserialize)]
-    #[yaserde(prefix = "t", namespace = "t: test")]
+    #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
+    #[serde(prefix = "t", namespace = "t: test")]
     pub struct PositiveIntegerPair {
-        #[yaserde(prefix = "t", rename = "First")]
+        #[serde(prefix = "t", rename = "First")]
         pub first: PositiveInteger,
 
-        #[yaserde(prefix = "t", rename = "Second")]
+        #[serde(prefix = "t", rename = "Second")]
         pub second: PositiveInteger,
     }
 
@@ -106,7 +106,7 @@ mod tests {
             first: PositiveInteger::from_biguint(1234.to_biguint().unwrap()),
             second: PositiveInteger::from_biguint(1.to_biguint().unwrap()),
         };
-        let actual = yaserde::ser::to_string(&i).unwrap();
+        let actual = serde::ser::to_string(&i).unwrap();
         assert_xml_eq(&actual, expected);
     }
 
@@ -120,7 +120,7 @@ mod tests {
                 <t:Second>1</t:Second>
             </t:PositiveIntegerPair>
             "#;
-        let i: PositiveIntegerPair = yaserde::de::from_str(s).unwrap();
+        let i: PositiveIntegerPair = serde::de::from_str(s).unwrap();
         assert_eq!(i.first.to_biguint().unwrap(), 1234.to_biguint().unwrap());
         assert_eq!(i.second.to_biguint().unwrap(), 1.to_biguint().unwrap());
     }

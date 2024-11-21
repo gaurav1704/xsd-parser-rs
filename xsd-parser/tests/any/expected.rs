@@ -1,6 +1,6 @@
-#[derive(Default, PartialEq, Debug, YaSerialize, YaDeserialize)]
-#[yaserde(prefix = "tns", namespace = "tns: http://example.com")]
+#[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
+#[serde(prefix = "tns", namespace = "tns: http://example.com")]
 pub struct FooType {
-    #[yaserde(prefix = "tns", rename = "Name")]
+    #[serde(prefix = "tns", rename = "Name")]
     pub name: String,
 }

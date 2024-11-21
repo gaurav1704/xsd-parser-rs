@@ -64,13 +64,13 @@ pub fn default_modify_type(type_name: &str, modifiers: &[TypeModifier]) -> Cow<'
 pub fn yaserde_for_attribute(name: &str, indent: &str) -> String {
     if let Some(index) = name.find(':') {
         format!(
-            "{}#[yaserde(attribute, prefix = \"{}\", rename = \"{}\")]\n",
+            "{}#[serde(attribute, prefix = \"{}\", rename = \"{}\")]\n",
             indent,
             &name[0..index],
             &name[index + 1..]
         )
     } else {
-        format!("{}#[yaserde(attribute, rename = \"{}\")]\n", indent, name)
+        format!("{}#[serde(attribute, rename = \"{}\")]\n", indent, name)
     }
 }
 
@@ -87,15 +87,15 @@ pub fn yaserde_for_element(
 
     match prefix {
         Some(p) => format!(
-            "{}#[yaserde(prefix = \"{}\", rename = \"{}\")]\n",
+            "{}#[serde(prefix = \"{}\", rename = \"{}\")]\n",
             indent, p, field_name
         ),
-        None => format!("{}#[yaserde(rename = \"{}\")]\n", indent, field_name),
+        None => format!("{}#[serde(rename = \"{}\")]\n", indent, field_name),
     }
 }
 
 pub fn yaserde_for_flatten_element(indent: &str) -> String {
-    format!("{}#[yaserde(flatten)]\n", indent)
+    format!("{}#[serde(flatten)]\n", indent)
 }
 
 #[cfg(test)]

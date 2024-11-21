@@ -204,6 +204,7 @@ pub enum UseType {
 }
 
 pub type MinOccurs = usize;
+#[derive(Debug)]
 pub enum MaxOccurs {
     Bounded(usize),
     Unbounded,

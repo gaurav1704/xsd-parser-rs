@@ -1,5 +1,5 @@
 use std::io::{Read, Write};
-use yaserde::{de, ser};
+use serde::{de, ser};
 
 pub fn serialize<S, W: Write>(
     self_bypass: &S,

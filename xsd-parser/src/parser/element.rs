@@ -72,7 +72,6 @@ fn parse_field_of_sequence(node: &Node, _: &Node) -> RsEntity {
         .attr_name()
         .unwrap_or_else(|| node.attr_ref().unwrap_or("UNSUPPORTED_ELEMENT_NAME"))
         .to_string();
-
     if node.has_attribute(attribute::TYPE) || node.has_attribute(attribute::REF) {
         let type_name = node
             .attr_type()
@@ -150,6 +149,7 @@ fn parse_global_element(node: &Node) -> RsEntity {
 pub fn element_modifier(node: &Node) -> TypeModifier {
     let min = min_occurs(node);
     let max = max_occurs(node);
+
     match min {
         0 => match max {
             MaxOccurs::None => TypeModifier::Option,
@@ -157,7 +157,10 @@ pub fn element_modifier(node: &Node) -> TypeModifier {
             MaxOccurs::Bounded(val) => {
                 if val > 1 {
                     TypeModifier::Array
-                } else {
+                } else if val == 1 {
+                    TypeModifier::Option
+                }
+                else {
                     TypeModifier::None
                 }
             }

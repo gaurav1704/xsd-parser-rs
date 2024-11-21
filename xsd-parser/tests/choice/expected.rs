@@ -4,8 +4,8 @@ pub struct BarType(pub String);
 #[derive(Default, PartialEq, Debug, UtilsTupleIo, UtilsDefaultSerde)]
 pub struct BazType(pub i32);
 
-#[derive(PartialEq, Debug, YaSerialize, YaDeserialize)]
-#[yaserde(prefix = "tns", namespace = "tns: http://example.com")]
+#[derive(PartialEq, Debug, Serialize, Deserialize)]
+#[serde(prefix = "tns", namespace = "tns: http://example.com")]
 pub enum FooTypeChoice {
     Bar(BarType),
     Baz(BazType),
@@ -18,9 +18,9 @@ impl Default for FooTypeChoice {
     }
 }
 
-#[derive(Default, PartialEq, Debug, YaSerialize, YaDeserialize)]
-#[yaserde(prefix = "tns", namespace = "tns: http://example.com")]
+#[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
+#[serde(prefix = "tns", namespace = "tns: http://example.com")]
 pub struct FooType {
-    #[yaserde(flatten)]
+    #[serde(flatten)]
     pub foo_type_choice: FooTypeChoice,
 }

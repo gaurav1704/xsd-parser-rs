@@ -57,6 +57,5 @@ pub fn parse(text: &str) -> Result<RsFile, ()> {
             st.extend_attribute_group(&map);
         }
     }
-
     Ok(schema_rs)
 }

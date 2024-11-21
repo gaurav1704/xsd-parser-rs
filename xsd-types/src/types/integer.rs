@@ -37,7 +37,7 @@ impl fmt::Display for Integer {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{YaDeserialize, YaSerialize};
+    use yaserde_derive::{Deserialize, Serialize};
 
     #[test]
     fn integer_parse_test() {
@@ -79,13 +79,13 @@ mod tests {
         assert_eq!(Integer((-1).to_bigint().unwrap()).to_string(), "-1");
     }
 
-    #[derive(Default, PartialEq, Debug, YaSerialize, YaDeserialize)]
-    #[yaserde(prefix = "t", namespace = "t: test")]
+    #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
+    #[serde(prefix = "t", namespace = "t: test")]
     pub struct IntegerPair {
-        #[yaserde(prefix = "t", rename = "First")]
+        #[serde(prefix = "t", rename = "First")]
         pub first: Integer,
 
-        #[yaserde(prefix = "t", rename = "Second")]
+        #[serde(prefix = "t", rename = "Second")]
         pub second: Integer,
     }
 
@@ -102,7 +102,7 @@ mod tests {
             first: Integer::from_bigint(1234.to_bigint().unwrap()),
             second: Integer::from_bigint((-1234).to_bigint().unwrap()),
         };
-        let actual = yaserde::ser::to_string(&i).unwrap();
+        let actual = serde::ser::to_string(&i).unwrap();
         assert_xml_eq(&actual, expected);
     }
 
@@ -116,7 +116,7 @@ mod tests {
                 <t:Second>-1234</t:Second>
             </t:IntegerPair>
             "#;
-        let i: IntegerPair = yaserde::de::from_str(s).unwrap();
+        let i: IntegerPair = serde::de::from_str(s).unwrap();
         assert_eq!(i.first.to_bigint().unwrap(), 1234.to_bigint().unwrap());
         assert_eq!(i.second.to_bigint().unwrap(), (-1234).to_bigint().unwrap());
     }

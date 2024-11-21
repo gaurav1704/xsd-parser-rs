@@ -128,7 +128,7 @@ impl fmt::Display for GMonthDay {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{YaDeserialize, YaSerialize};
+    use yaserde_derive::{Deserialize, Serialize};
 
     #[test]
     fn gmonthday_parse_test() {
@@ -234,13 +234,13 @@ mod tests {
         );
     }
 
-    #[derive(Default, PartialEq, Debug, YaSerialize, YaDeserialize)]
-    #[yaserde(prefix = "t", namespace = "t: test")]
+    #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
+    #[serde(prefix = "t", namespace = "t: test")]
     pub struct Message {
-        #[yaserde(prefix = "t", rename = "CreatedAt")]
+        #[serde(prefix = "t", rename = "CreatedAt")]
         pub created_at: GMonthDay,
 
-        #[yaserde(prefix = "t", rename = "Text")]
+        #[serde(prefix = "t", rename = "Text")]
         pub text: String,
     }
 
@@ -261,7 +261,7 @@ mod tests {
             },
             text: "Hello world".to_string(),
         };
-        let actual = yaserde::ser::to_string(&m).unwrap();
+        let actual = serde::ser::to_string(&m).unwrap();
         assert_xml_eq(&actual, expected);
     }
 
@@ -274,7 +274,7 @@ mod tests {
                 <t:Text>Hello world</t:Text>
             </t:Message>
             "#;
-        let m: Message = yaserde::de::from_str(s).unwrap();
+        let m: Message = serde::de::from_str(s).unwrap();
         assert_eq!(m.created_at.month, 7);
         assert_eq!(m.created_at.day, 9);
         assert_eq!(
