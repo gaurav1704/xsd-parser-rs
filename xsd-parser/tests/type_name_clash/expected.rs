@@ -1,7 +1,7 @@
 #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
 #[serde(prefix = "tns", namespace = "tns: http://example.com")]
 pub struct BarType {
-    #[serde(attribute, rename = "a")]
+    #[serde(rename = "a")]
     pub a: Option<String>,
 }
 
@@ -23,10 +23,10 @@ pub mod foo_type {
     #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
     #[serde(prefix = "tns", namespace = "tns: http://example.com")]
     pub struct BarType {
-        #[serde(attribute, rename = "b")]
+        #[serde(rename = "b")]
         pub b: Option<String>,
 
-        #[serde(attribute, rename = "a")]
+        #[serde(rename = "a")]
         pub a: Option<String>,
 
     }

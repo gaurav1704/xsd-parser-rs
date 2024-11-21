@@ -5,7 +5,7 @@ fn deserialization_works() {
     mod expected {
         use std::str::FromStr;
         use xsd_macro_utils::*;
-        use yaserde_derive::{Deserialize, Serialize};
+        use serde::{Deserialize, Serialize};
 
         include!("expected.rs");
     }

@@ -37,7 +37,7 @@ impl fmt::Display for Integer {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[test]
     fn integer_parse_test() {

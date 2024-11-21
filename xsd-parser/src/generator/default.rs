@@ -61,23 +61,24 @@ pub fn default_modify_type(type_name: &str, modifiers: &[TypeModifier]) -> Cow<'
     result.into()
 }
 
-pub fn yaserde_for_attribute(name: &str, indent: &str) -> String {
+pub fn serde_for_attribute(name: &str, indent: &str) -> String {
     if let Some(index) = name.find(':') {
         format!(
-            "{}#[serde(attribute, prefix = \"{}\", rename = \"{}\")]\n",
+            "{}#[serde(prefix = \"{}\", rename = \"@{}\")]\n",
             indent,
             &name[0..index],
             &name[index + 1..]
         )
     } else {
-        format!("{}#[serde(attribute, rename = \"{}\")]\n", indent, name)
+        format!("{}#[serde(rename = \"@{}\")]\n", indent, name)
     }
 }
 
-pub fn yaserde_for_element(
+pub fn serde_for_element(
     name: &str,
     target_namespace: Option<&Namespace>,
     indent: &str,
+    modifiers: &Vec<TypeModifier>
 ) -> String {
     let (prefix, field_name) = if let Some(index) = name.find(':') {
         (Some(&name[0..index]), &name[index + 1..])
@@ -85,16 +86,22 @@ pub fn yaserde_for_element(
         (target_namespace.and_then(|ns| ns.name()), name)
     };
 
+    let defaultForVec = if modifiers.contains(&TypeModifier::Array) {
+        ", default"
+    }else{
+        ""
+    };
+
     match prefix {
         Some(p) => format!(
-            "{}#[serde(prefix = \"{}\", rename = \"{}\")]\n",
-            indent, p, field_name
+            "{}#[serde(prefix = \"{}\", rename = \"{}\"{})]\n",
+            indent, p, field_name, defaultForVec
         ),
-        None => format!("{}#[serde(rename = \"{}\")]\n", indent, field_name),
+        None => format!("{}#[serde(rename = \"{}\"{})]\n", indent, field_name, defaultForVec),
     }
 }
 
-pub fn yaserde_for_flatten_element(indent: &str) -> String {
+pub fn serde_for_flatten_element(indent: &str) -> String {
     format!("{}#[serde(flatten)]\n", indent)
 }
 

@@ -42,7 +42,7 @@ impl fmt::Display for NonPositiveInteger {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[test]
     fn non_positive_integer_parse_test() {

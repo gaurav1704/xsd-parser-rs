@@ -86,7 +86,7 @@ impl fmt::Display for GDay {
 mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
-    use yaserde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[test]
     fn gday_parse_test() {

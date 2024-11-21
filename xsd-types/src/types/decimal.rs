@@ -35,7 +35,7 @@ mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
     use num_bigint::ToBigInt;
-    use yaserde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
     #[serde(prefix = "t", namespace = "t: test")]

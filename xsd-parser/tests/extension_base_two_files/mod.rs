@@ -3,7 +3,7 @@ use super::utils;
 #[test]
 fn deserialization_works() {
     mod expected {
-        use yaserde_derive::{Deserialize, Serialize};
+        use serde::{Deserialize, Serialize};
         include!("expected.rs");
     }
 

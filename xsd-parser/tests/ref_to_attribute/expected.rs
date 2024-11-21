@@ -5,7 +5,7 @@ impl Validate for Id {}
 #[derive(Default, PartialEq, Debug, Serialize, Deserialize)]
 #[serde(prefix = "tns", namespace = "tns: http://example.com")]
 pub struct FooType {
-    #[serde(attribute, prefix = "tns", rename = "id")]
+    #[serde(prefix = "tns", rename = "id")]
     pub id: Option<Id>,
 }
 

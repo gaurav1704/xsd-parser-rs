@@ -44,7 +44,7 @@ mod tests {
     use super::*;
     use crate::utils::xml_eq::assert_xml_eq;
     use chrono::NaiveDate;
-    use yaserde_derive::{Deserialize, Serialize};
+    use serde::{Deserialize, Serialize};
 
     #[test]
     fn datetime_parse_test() {
